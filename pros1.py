@@ -1,7 +1,6 @@
 """
 测试用例智构系统 - 轻量级 RAG（NumPy TF‑IDF）
-启动方式（允许局域网访问）：
-    streamlit run app.py --server.address 0.0.0.0
+streamlit run app.py https://aitestpros1.streamlit.app/
 """
 import streamlit as st
 st.set_page_config(page_title="测试用例智构系统", layout="wide")
@@ -79,8 +78,8 @@ class AppConfig:
     ALLOWED_FILE_TYPES = {
         "txt", "csv", "docx", "doc", "pdf", "xlsx", "xls", "pptx", "xmind", "md"
     }
-    RAG_TOP_K = 5
-    RAG_SIMILARITY_THRESHOLD = 0.01
+    RAG_TOP_K = 5    #检索返回最大片段数量
+    RAG_SIMILARITY_THRESHOLD = 0.2  # 检索返回最低相似度
     API_TIMEOUT = 60
     API_MAX_RETRIES = 2
     API_RETRY_DELAY = 2
@@ -481,7 +480,9 @@ class EnhancedKnowledgeBase:
             texts = []
             if isinstance(node, dict):
                 if 'title' in node:
-                    texts.append(node['title'])
+                    texts.append(node['title'])      # 添加标题提取
+                if 'note' in node and node['note']:  # 添加备注提取
+                    texts.append(node['note'])
                 if 'topics' in node:
                     for sub in node['topics']:
                         texts.extend(extract(sub))
