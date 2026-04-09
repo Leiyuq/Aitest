@@ -10,6 +10,8 @@ __pycache__/
 # IDE配置
 .idea/
 .vscode/
+.devcontainer
 
 # 环境变量
 .env
+.streamlit
